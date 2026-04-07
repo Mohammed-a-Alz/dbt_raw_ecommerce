@@ -35,6 +35,7 @@ final as (
         o.customer_id,
         o.order_status,
         o.purchased_at,
+        date(o.purchased_at) as purchased_date,
         o.approved_at,
         o.delivered_to_carrier_at,
         o.delivered_to_customer_at,

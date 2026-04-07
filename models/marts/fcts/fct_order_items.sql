@@ -24,6 +24,7 @@ final as (
         oi.seller_id,
         o.customer_id,
         o.purchased_at,
+        date(o.purchased_at) as purchased_date,
 
         oi.shipping_limit_at,
         oi.price,
