@@ -1,4 +1,4 @@
-# BNPL Analytics Pipeline 
+# E-commerce Analytics Pipeline 
 
 ## Overview
 This project simulates an end-to-end analytics pipeline for a Buy Now, Pay Later (BNPL) business model.  
