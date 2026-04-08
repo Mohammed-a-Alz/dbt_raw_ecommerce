@@ -59,9 +59,7 @@ The Power BI dashboard provides a high-level overview of business performance:
 
 ---
 
-## Example Insights
-
-> (To be expanded with deeper analysis)
+## Insights from dashboard
 
 - Orders with multiple installments tend to contribute a significant portion of total GMV  
 - Sales show clear monthly variation, indicating seasonality in customer purchasing behavior  
