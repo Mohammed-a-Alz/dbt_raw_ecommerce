@@ -53,7 +53,9 @@ The Power BI dashboard provides a high-level overview of business performance:
 - Payment behavior  
 - Time-based trends  
 
-📸 See `/dashboard/screenshots/` for preview
+## Dashboard Preview
+
+![Dashboard](dashboard/screenshots/dashboard.PNG)
 
 ---
 
