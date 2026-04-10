@@ -1,11 +1,11 @@
 # E-commerce Analytics Pipeline 
 
 ## Overview
-This project simulates an end-to-end analytics pipeline for a Buy Now, Pay Later (BNPL) business model.  
+This project builds an end-to-end analytics pipeline for an e-commerce business.
 
-It transforms raw e-commerce data into a structured data warehouse using dbt and BigQuery, and delivers business-ready insights through a Power BI dashboard.
+It transforms raw transactional data into a structured data warehouse using dbt and BigQuery, and delivers business-ready insights through a Power BI dashboard.
 
-The focus of this project is not just analysis, but building a scalable analytics layer that supports decision-making.
+The focus is on designing a scalable analytics layer and analyzing key metrics such as revenue (GMV), order behavior, and payment patterns to support data-driven decision-making.
 
 ---
 
@@ -48,21 +48,12 @@ This structure enables answering questions at different levels (order-level, ite
 
 The Power BI dashboard provides a high-level overview of business performance:
 
-- Total GMV  
-- Order volume  
-- Payment behavior  
-- Time-based trends  
-
-## Dashboard Preview
+- GMV, order volume, average order value, average installments
+- Revenue trend with month-over-month comparison
+- Top product categories by revenue 
+- Payment method mix
 
 ![Dashboard](dashboard/screenshots/dashboard.PNG)
-
----
-
-## Insights from dashboard
-
-- Orders with multiple installments tend to contribute a significant portion of total GMV  
-- Sales show clear monthly variation, indicating seasonality in customer purchasing behavior  
 
 ---
 
