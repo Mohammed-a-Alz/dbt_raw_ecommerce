@@ -1,0 +1,28 @@
+semantic_models:
+  - name: order_payments
+    description: "Payment transactions for orders"
+    model: ref('fct_order_payments')
+
+    entities:
+      - name: order
+        type: foreign
+        expr: order_id
+
+    dimensions:
+      - name: payment_type
+        type: categorical
+        expr: payment_type
+
+    measures:
+      - name: total_revenue
+        description: "Total payment value"
+        agg: sum
+        expr: payment_value
+      - name: total_installments
+        description: "Total installments"
+        agg: sum
+        expr: payment_installments
+      - name: order_count
+        description: "Number of orders"
+        agg: count_distinct
+        expr: order_id

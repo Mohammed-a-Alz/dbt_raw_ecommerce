@@ -1,0 +1,22 @@
+semantic_models:
+  - name: orders
+    description: "One row per order"
+    model: ref('fct_orders')
+
+    entities:
+      - name: order
+        type: primary
+        expr: order_id
+      - name: customer
+        type: foreign
+        expr: customer_id
+
+    dimensions:
+      - name: order_status
+        type: categorical
+        expr: order_status
+      - name: purchased_at
+        type: time
+        type_params:
+          time_granularity: day
+        expr: purchased_at
