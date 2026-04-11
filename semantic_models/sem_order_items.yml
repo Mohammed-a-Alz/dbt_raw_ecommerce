@@ -1,0 +1,20 @@
+semantic_models:
+  - name: order_items
+    description: "One row per item in an order"
+    model: ref('fct_order_items')
+
+    entities:
+      - name: order
+        type: foreign
+        expr: order_id
+      - name: product
+        type: foreign
+        expr: product_id
+      - name: seller
+        type: foreign
+        expr: seller_id
+
+    measures:
+      - name: total_items
+        agg: count
+        expr: order_id

@@ -54,8 +54,15 @@ models:
           - not_null
           - relationships:
               arguments:
-                to: ref('stg_customers')
+                to: ref('dim_customers')
                 field: customer_id
+      - name: order_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['delivered', 'shipped', 'canceled',
+                         'unavailable', 'invoiced',
+                         'processing', 'created', 'approved']
 
   - name: fct_order_items
     description: "One row per item in an order — this is where revenue lives"
@@ -63,6 +70,10 @@ models:
       - name: order_id
         tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_orders')
+                field: order_id
       - name: product_id
         tests:
           - not_null
@@ -84,6 +95,12 @@ models:
       - name: order_id
         tests:
           - not_null
+      - name: payment_type
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['credit_card', 'boleto',
+                         'voucher', 'debit_card']
       - name: payment_value
         tests:
           - not_null

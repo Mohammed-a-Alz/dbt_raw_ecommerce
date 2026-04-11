@@ -1,0 +1,26 @@
+metrics:
+  - name: total_revenue
+    description: "Total GMV from all payments"
+    type: simple
+    type_params:
+      measure: order_payments__total_revenue
+
+  - name: total_orders
+    description: "Count of distinct orders"
+    type: simple
+    type_params:
+      measure: order_payments__order_count
+
+  - name: average_order_value
+    description: "Average revenue per order"
+    type: ratio
+    type_params:
+      numerator: total_revenue
+      denominator: total_orders
+
+  - name: average_installments
+    description: "Average number of installments per order"
+    type: ratio
+    type_params:
+      numerator: order_payments__total_installments
+      denominator: total_orders
