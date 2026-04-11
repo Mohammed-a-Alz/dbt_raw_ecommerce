@@ -31,6 +31,18 @@ customer_orders as (
         c.customer_state,
         c.customer_zip_code_prefix
 
+),
+
+deduplicated as (
+
+    select *,
+        row_number() over (
+            partition by customer_unique_id
+            order by total_orders desc
+        ) as rn
+
+    from customer_orders
+
 )
 
 select
@@ -46,4 +58,5 @@ select
         else false
     end as is_repeat_customer
 
-from customer_orders
+from deduplicated
+where rn = 1
