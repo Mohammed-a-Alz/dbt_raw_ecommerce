@@ -3,27 +3,17 @@ version: 2
 models:
   - name: dim_products
     description: "One row per product with English category name."
+    semantic_model:
+      enabled: true
+      name: products
     columns:
       - name: product_id
-        description: "Unique product identifier"
-        data_tests:
-          - unique
-          - not_null
+        data_tests: [unique, not_null]
+        entity:
+          type: primary
       - name: product_category
-        description: "English product category name"
+        dimension:
+          type: categorical
       - name: product_category_name
-        description: "Original Portuguese category name"
-
-semantic_models:
-  - name: products
-    description: "Product dimension."
-    model: ref('dim_products')
-    entities:
-      - name: product
-        type: primary
-        expr: product_id
-    dimensions:
-      - name: product_category
-        type: categorical
-      - name: product_category_name
-        type: categorical
+        dimension:
+          type: categorical

@@ -3,89 +3,63 @@ version: 2
 models:
   - name: fct_order_payments
     description: "One row per payment transaction linked to an order."
+    semantic_model:
+      enabled: true
+      name: order_payments
     columns:
+      - name: payment_sequential
+        entity:
+          name: payment
+          type: primary
       - name: order_id
-        data_tests:
-          - not_null
+        data_tests: [not_null]
+        entity:
+          name: order
+          type: foreign
+      - name: purchased_at
+        granularity: day
+        dimension:
+          type: time
       - name: payment_type
         data_tests:
           - accepted_values:
               arguments:
                 values: ['credit_card','boleto','voucher','debit_card','not_defined']
+        dimension:
+          type: categorical
       - name: payment_value
-        data_tests:
-          - not_null
-      - name: purchased_at
-        description: "Timestamp when the order was placed"
-
-semantic_models:
-  - name: order_payments
-    description: "Payment transaction grain."
-    defaults:
-      agg_time_dimension: purchased_at
-    model: ref('fct_order_payments')
-    entities:
-      - name: payment
-        type: primary
-        expr: payment_sequential
-      - name: order
-        type: foreign
-        expr: order_id
-    dimensions:
-      - name: payment_type
-        type: categorical
-      - name: purchased_at
-        type: time
-        type_params:
-          time_granularity: day
-    measures:
+        data_tests: [not_null]
+      - name: payment_installments
+    metrics:
       - name: total_revenue
+        label: Total Revenue
         description: "Total GMV from all payments"
+        type: simple
         agg: sum
         expr: payment_value
       - name: total_orders
+        label: Total Orders
         description: "Count of distinct orders"
+        type: simple
         agg: count_distinct
         expr: order_id
       - name: total_installments
-        description: "Total installments"
+        label: Total Installments
+        description: "Total installments across all payments"
+        type: simple
         agg: sum
         expr: payment_installments
 
 metrics:
-  - name: total_revenue
-    label: Total Revenue
-    description: "Total GMV from all payments"
-    type: simple
-    type_params:
-      measure: total_revenue
-  - name: total_orders
-    label: Total Orders
-    description: "Count of distinct orders with payments"
-    type: simple
-    type_params:
-      measure: total_orders
-  - name: total_installments
-    label: Total Installments
-    description: "Total installments across all payments"
-    type: simple
-    type_params:
-      measure: total_installments
   - name: average_order_value
     label: Average Order Value
     description: "Average revenue per order"
-    type: derived
-    type_params:
-      expr: total_revenue / total_orders
-      metrics:
-        - name: total_revenue
-        - name: total_orders
+    type: ratio
+    numerator: total_revenue
+    denominator: total_orders
   - name: average_installments
     label: Avg Installments per Order
     description: "Average installments per order"
-    type: derived
-    type_params:
-      expr: total_installments / total_orders
-      metrics:
-        - name: total_installments
-        - name: total_orders
+    type: ratio
+    numerator: total_installments
+    denominator: total_orders

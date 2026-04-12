@@ -2,10 +2,7 @@ version: 2
 
 models:
   - name: dim_sellers
-    description: "One row per seller"
+    description: "One row per seller."
     columns:
       - name: seller_id
-        description: "Unique seller identifier"
-        data_tests:
-          - unique
-          - not_null
+        data_tests: [unique, not_null]

@@ -3,73 +3,49 @@ version: 2
 models:
   - name: fct_order_items
     description: "One row per item in an order — item-level revenue."
+    semantic_model:
+      enabled: true
+      name: order_items
     columns:
+      - name: order_item_id
+        entity:
+          name: order_item
+          type: primary
       - name: order_id
-        data_tests:
-          - not_null
+        data_tests: [not_null]
+        entity:
+          name: order
+          type: foreign
       - name: product_id
-        data_tests:
-          - not_null
+        data_tests: [not_null]
+        entity:
+          name: product
+          type: foreign
       - name: seller_id
-        data_tests:
-          - not_null
+        data_tests: [not_null]
+        entity:
+          name: seller
+          type: foreign
       - name: purchased_at
-        description: "Timestamp when the order was placed"
-
-semantic_models:
-  - name: order_items
-    description: "Order item grain fact table."
-    defaults:
-      agg_time_dimension: purchased_at
-    model: ref('fct_order_items')
-    entities:
-      - name: order_item
-        type: primary
-        expr: order_item_id
-      - name: order
-        type: foreign
-        expr: order_id
-      - name: product
-        type: foreign
-        expr: product_id
-      - name: seller
-        type: foreign
-        expr: seller_id
-    dimensions:
-      - name: purchased_at
-        type: time
-        type_params:
-          time_granularity: day
-    measures:
+        granularity: day
+        dimension:
+          type: time
+    metrics:
       - name: total_items_sold
+        label: Total Items Sold
         description: "Total number of items sold"
+        type: simple
         agg: count_distinct
         expr: order_item_id
       - name: item_revenue
+        label: Item Revenue
         description: "Revenue from item prices"
+        type: simple
         agg: sum
         expr: price
       - name: gross_revenue
+        label: Gross Revenue
         description: "Total value including freight"
+        type: simple
         agg: sum
         expr: total_item_value
-
-metrics:
-  - name: total_items_sold
-    label: Total Items Sold
-    description: "Total number of items sold"
-    type: simple
-    type_params:
-      measure: total_items_sold
-  - name: item_revenue
-    label: Item Revenue
-    description: "Revenue from item prices excluding freight"
-    type: simple
-    type_params:
-      measure: item_revenue
-  - name: gross_revenue
-    label: Gross Revenue
-    description: "Total item value including freight"
-    type: simple
-    type_params:
-      measure: gross_revenue

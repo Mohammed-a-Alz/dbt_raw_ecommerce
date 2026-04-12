@@ -2,10 +2,7 @@ version: 2
 
 models:
   - name: dim_dates
-    description: "Calendar date dimension from 2016 to current date"
+    description: "Calendar date dimension."
     columns:
       - name: date_day
-        description: "Calendar date"
-        data_tests:
-          - unique
-          - not_null
+        data_tests: [unique, not_null]

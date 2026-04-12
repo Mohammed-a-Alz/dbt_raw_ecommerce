@@ -3,66 +3,42 @@ version: 2
 models:
   - name: fct_orders
     description: "One row per order with payment totals, review scores, and delivery metrics."
+    semantic_model:
+      enabled: true
+      name: orders
     columns:
       - name: order_id
-        description: "Unique order identifier"
-        data_tests:
-          - unique
-          - not_null
+        data_tests: [unique, not_null]
+        entity:
+          type: primary
       - name: customer_id
-        data_tests:
-          - not_null
+        data_tests: [not_null]
+        entity:
+          name: customer
+          type: foreign
+      - name: purchased_at
+        granularity: day
+        dimension:
+          type: time
       - name: order_status
         data_tests:
           - accepted_values:
               arguments:
                 values: ['delivered','shipped','canceled','unavailable',
                          'invoiced','processing','created','approved']
-      - name: purchased_at
-        description: "Timestamp when order was placed"
+        dimension:
+          type: categorical
       - name: delivery_days
-        description: "Days taken to deliver the order"
-
-semantic_models:
-  - name: orders
-    description: "Order grain fact table."
-    defaults:
-      agg_time_dimension: purchased_at
-    model: ref('fct_orders')
-    entities:
-      - name: order
-        type: primary
-        expr: order_id
-      - name: customer
-        type: foreign
-        expr: customer_id
-    dimensions:
-      - name: order_status
-        type: categorical
-      - name: purchased_at
-        type: time
-        type_params:
-          time_granularity: day
-    measures:
+    metrics:
       - name: order_count
+        label: Order Count
         description: "Total number of orders"
+        type: simple
         agg: count_distinct
         expr: order_id
       - name: avg_delivery_days
-        description: "Average days to deliver"
+        label: Avg Delivery Days
+        description: "Average days to deliver an order"
+        type: simple
         agg: average
         expr: delivery_days
-
-metrics:
-  - name: order_count
-    label: Order Count
-    description: "Total number of orders"
-    type: simple
-    type_params:
-      measure: order_count
-  - name: avg_delivery_days
-    label: Avg Delivery Days
-    description: "Average days to deliver an order"
-    type: simple
-    type_params:
-      measure: avg_delivery_days
