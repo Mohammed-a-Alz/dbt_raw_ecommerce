@@ -6,6 +6,7 @@ models:
     semantic_model:
       enabled: true
       name: order_items
+      agg_time_dimension: purchased_at
     columns:
       - name: order_item_id
         entity:

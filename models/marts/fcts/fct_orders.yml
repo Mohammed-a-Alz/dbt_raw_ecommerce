@@ -6,6 +6,7 @@ models:
     semantic_model:
       enabled: true
       name: orders
+      agg_time_dimension: purchased_at
     columns:
       - name: order_id
         data_tests: [unique, not_null]
