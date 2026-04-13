@@ -1,4 +1,4 @@
-# E-commerce Analytics Pipeline
+# AI-Ready E-commerce Analytics Pipeline
 
 ## Overview
 
