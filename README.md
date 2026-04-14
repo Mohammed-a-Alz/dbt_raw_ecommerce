@@ -136,8 +136,6 @@ Models and tests run through a **production dbt Cloud job** triggered on the mai
 
 ## Dashboard
 
-The Power BI dashboard connects to the semantic layer via **DirectQuery**, ensuring numbers always reflect live, governed metric definitions.
-
 **KPIs:**
 - GMV, Order Count, AOV, Average Installments (with month-over-month comparison)
 
