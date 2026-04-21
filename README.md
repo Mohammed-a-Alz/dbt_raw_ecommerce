@@ -8,6 +8,19 @@ The focus is not just on building a dashboard — it's on building a **data plat
 
 ---
 
+## Dashboard
+
+**KPIs:**
+- GMV, Order Count, AOV, Average Installments (with month-over-month comparison)
+
+**Charts:**
+- Revenue trend over time
+- Top product categories by revenue
+- Payment method distribution
+
+![Dashboard](dashboard/screenshots/dashboard.PNG)
+
+---
 ## Architecture
 
 ```
@@ -134,20 +147,6 @@ Models and tests run through a **production dbt Cloud job** triggered on the mai
 
 ---
 
-## Dashboard
-
-**KPIs:**
-- GMV, Order Count, AOV, Average Installments (with month-over-month comparison)
-
-**Charts:**
-- Revenue trend over time
-- Top product categories by revenue
-- Payment method distribution
-
-![Dashboard](dashboard/screenshots/dashboard.PNG)
-
----
-
 ## Tech Stack
 
 | Tool | Version / Notes |
@@ -158,14 +157,6 @@ Models and tests run through a **production dbt Cloud job** triggered on the mai
 | Power BI | DirectQuery mode |
 | Python | Data exploration (Pandas) |
 | Git / GitHub | Version control + branch workflow |
-
----
-
-## What I Learned
-
-The hardest part wasn't the SQL — it was the **semantic layer setup**. dbt Fusion uses a different YAML spec than classic dbt, and getting `agg_time_dimension`, entity definitions, and metric references correct took significant iteration. The payoff was real though: once the semantic layer was working, Power BI, Excel, and Claude AI all queried the same definitions without any additional SQL.
-
-The other key lesson was **data quality as a discipline**, not an afterthought. Running `dbt test` in production caught real issues in the Olist dataset (duplicate review IDs, type mismatches) that would have silently corrupted metrics downstream.
 
 ---
 
